@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Index html</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+	integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+	integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+	crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("form").submit(event=>{
+				event.preventDefault();
+				let f = event.target;
+				$.get("/item?pH=" + f.pH.value + "&humus=" + f.humus.value + "&carbonate=" + f.carbonate.value + "&nitrogen=" + f.nitrogen.value + "&phosphorous=" + f.phosphorous.value + "&potassium=" + f.potassium.value + "&plant=" + f.plants.value,
+					(data, status)=>{
+						console.log(data);
+						console.log(status);
+						$(".jumbotron").append(`<h3>preporuka: ${data.recommendation}</h3>`)
+									   .append(`<p>${JSON.stringify(data)}</p>`);
+					})
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<h3>Unos parametara:</h3>
+		</div>
+		<div class="row">
+			
+			<form action="/soil" method="get">
+				<div class="form-group">
+					<label for="pH">pH:</label> <input type="number" step = "0.01"
+						class="form-control" id="pH" name="pH">
+				</div>
+				<div class="form-group">
+					<label for="humus">Humus:</label> <input type="number" step = "0.01"
+						class="form-control" id="humus" name="humus">
+				</div>
+				<div class="form-group">
+					<label for="carbonate">Carbonate:</label> <input type="number" step = "0.01"
+						class="form-control" id="carbonate" name="carbonate">
+				</div>
+				<div class="form-group">
+					<label for="nitrogen">Nitrogen:</label> <input type="number" step = "0.001"
+						class="form-control" id="nitrogen" name="nitrogen">
+				</div>
+				<div class="form-group">
+					<label for="phosphorous">Phosphorous:</label> <input type="number" step = "0.01"
+						class="form-control" id="phosphorous" name="phosphorous">
+				</div>
+				<div class="form-group">
+					<label for="potassium">Potassium:</label> <input type="number" step = "0.01"
+						class="form-control" id="potassium" name="potassium">
+				</div>
+				<div class="form-group">
+					<label for="plants">Plant:</label> 
+					<select class="form-control" name="plants" id="plants">
+					  <option value="malina">Malina</option>
+					  <option value="sljiva">Sljiva</option>
+					  <option value="jagoda">Jagoda</option>
+					  <option value="kupina">Kupina</option>
+					</select>
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+		<div class="row">
+			<div class="jumbotron">
+			  
+			</div>
+		</div>
+	</div>
+</body>
+</html>

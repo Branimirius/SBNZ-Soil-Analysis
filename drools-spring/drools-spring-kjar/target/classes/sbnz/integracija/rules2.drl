@@ -1,0 +1,13 @@
+package sbnz.integracija;
+
+import sbnz.integracija.example.facts.Soil;
+
+rule "Classify Item - High Range"
+    when
+        $i: Item( cost > 300, category == Category.NA )
+    then
+        $i.setCategory(Item.Category.HIGH_RANGE);
+        update($i);
+        System.out.println("HELPHELP");
+end
+
