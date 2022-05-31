@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import sbnz.integracija.example.facts.Fertilizer;
 import sbnz.integracija.example.facts.Item;
 import sbnz.integracija.example.facts.Soil;
 
@@ -34,6 +35,10 @@ public class SampleAppService {
 		KieSession kieSession = kieContainer.newKieSession();
 		//kieSession.setGlobal("recommendation", "prazno");
 		kieSession.insert(s);
+		kieSession.insert(new Fertilizer("NPK", 8, 16, 24));
+		kieSession.insert(new Fertilizer("NPK", 6, 12, 24));
+		kieSession.insert(new Fertilizer("NPK", 8, 24, 16));
+		kieSession.insert(new Fertilizer("MAP + Kalijum", 11, 52, 30));
 		kieSession.fireAllRules();
 		//System.out.println("RECOMMENDED: " + kieSession.getGlobal("recommendation"));
 		kieSession.dispose();

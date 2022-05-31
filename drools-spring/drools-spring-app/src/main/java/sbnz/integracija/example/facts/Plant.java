@@ -1,10 +1,19 @@
 package sbnz.integracija.example.facts;
 
 public class Plant {
+	private String name;
 	private double pH;
 	private double nConsumption;
 	private double pConsumption;
 	private double kConsumption;
+	
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public double getpH() {
 		return pH;
 	}
@@ -30,8 +39,9 @@ public class Plant {
 		this.kConsumption = kConsumption;
 	}
 	
-	public Plant(double pH, double nConsumption, double pConsumption, double kConsumption) {
+	public Plant(String name, double pH, double nConsumption, double pConsumption, double kConsumption) {
 		super();
+		this.name = name;
 		this.pH = pH;
 		this.nConsumption = nConsumption;
 		this.pConsumption = pConsumption;

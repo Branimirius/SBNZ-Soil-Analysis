@@ -18,6 +18,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule} from '@angular/material/grid-list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { MatInputModule } from '@angular/material/input';
     MatCardModule,
     MatGridListModule,
     MatInputModule,
+    MatSelectModule,
     MatTabsModule
 
   ],
