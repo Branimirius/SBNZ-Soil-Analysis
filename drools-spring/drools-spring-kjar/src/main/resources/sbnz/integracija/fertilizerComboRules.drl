@@ -5,23 +5,28 @@ package integracija
 
 import sbnz.integracija.example.facts.Soil;
 import sbnz.integracija.example.facts.Fertilizer;
+import sbnz.integracija.example.OperationService;
 import java.util.ArrayList;
 
 //declare any global variables here
-
+global OperationService operationService;
 
 
 
 rule "Recommend NPK proportion"
 	salience 1
     when
-        $soil: Soil($kgn: kgN > 0, $kgp: kgP > 0, $kgk: kgK > 0)
-        $list: ArrayList() from collect(
-        	Fertilizer(abs(($kgp/$kgk) - (P/K)) < 0.2)
+        $soil: Soil($kgn: kgN, $kgp: kgP , $kgk: kgK)
+        $list: ArrayList( size > 0) from collect(
+        	Fertilizer()
         )
+        
+        $f: Fertilizer() from operationService.getOptimalFertilizer($list, $kgp, $kgk)
     then
-        $soil.setRecommendation($s.getRecommendation() + "");
-
+    	
+        $soil.setRecommendation($soil.getRecommendation() + "moze nesto: " + $f.getName());
+		update($soil);
+		
 end
 
 rule "Your Second Rule"

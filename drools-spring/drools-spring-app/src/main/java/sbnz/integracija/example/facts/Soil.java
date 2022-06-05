@@ -32,9 +32,9 @@ public class Soil implements Serializable {
 		this.potassium = potassium;
 		this.plant = plant;
 		this.recommendation = recommendation;
-		this.kgK = 0.0;
-		this.kgN = 0.0;
-		this.kgP = 0.0;
+		this.kgK = 1.0;
+		this.kgN = 1.0;
+		this.kgP = 1.0;
 	}
 	
 	
@@ -104,6 +104,18 @@ public class Soil implements Serializable {
 	}
 	public void setKgK(double kgK) {
 		this.kgK = kgK;
+	}
+	public void setPositive() {
+		System.out.println("making it positive..");
+		if(this.kgN <= 0) {
+			this.kgN = 0.99;
+		} 
+		if(this.kgP <= 0) {
+			this.kgP = 0.99;
+		} 
+		if(this.kgK <= 0) {
+			this.kgK = 0.99;
+		} 
 	}
 	@Override
 	public int hashCode() {

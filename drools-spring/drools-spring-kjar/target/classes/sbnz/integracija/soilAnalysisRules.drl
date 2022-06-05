@@ -34,7 +34,7 @@ end
 rule "Nitrogen recommendation raspberry"
 	salience 4 
 	when 
-		$s: Soil( kgN == 0.0, plant.equals("malina") )
+		$s: Soil( kgN == 1.0, plant.equals("malina") )
 	then 
 		$s.setKgN( 400 - (1500 * $s.getNitrogen()));
 		System.out.println("set kgN to " + $s.getKgN());
@@ -44,9 +44,9 @@ end
 rule "Phosphorous recommendation raspberry"
 	salience 4 
 	when 
-		$s: Soil( kgP == 0.0, plant.equals("malina"))
+		$s: Soil( kgP == 1.0, plant.equals("malina"))
 	then 
-		$s.setKgP( 100 - (5.5 * $s.getPhosphorous()));
+		$s.setKgP( 100 - (4 * $s.getPhosphorous()));
 		System.out.println("set kgP to " + $s.getKgP());
 		update($s);
 end
@@ -54,26 +54,26 @@ end
 rule "Potassium recommendation raspberry"
 	salience 4 
 	when 
-		$s: Soil( kgK == 0.0, plant.equals("malina"))
+		$s: Soil( kgK == 1.0, plant.equals("malina"))
 	then 
-		$s.setKgK( 240 - (9 * $s.getPotassium()));
+		$s.setKgK( 160 - (4 * $s.getPotassium()));
 		System.out.println("set kgK to " + $s.getKgK());
 		update($s);
 end
 
 rule "NPK recommendation raspberry"
-	salience 4 
+	salience 3 
 	when 
-		$s: Soil( kgN != 0.0, kgP != 0.0, kgK != 0.0, plant.equals("malina"))	
+		$s: Soil( kgN != 1.0, kgP != 1.0, kgK != 1.0, plant.equals("malina"))	
 	then 
-		$s.setRecommendation($s.getRecommendation() + "NPK (kg/ha): " + $s.getKgN() + " " + $s.getKgP() + " " + $s.getKgK() + " \n" );
+		$s.setRecommendation($s.getRecommendation() + "NPK (kg/ha): " + $s.getKgN() + ", " + $s.getKgP() + ", " + $s.getKgK() + " \n" );
 		update($s);
 end
 
 rule "Nitrogen recommendation plum"
 	salience 4 
 	when 
-		$s: Soil( kgN == 0.0, plant.equals("sljiva") )
+		$s: Soil( kgN == 1.0, plant.equals("sljiva") )
 	then 
 		$s.setKgN( 112 - (320 * $s.getNitrogen()));
 		System.out.println("set kgN to " + $s.getKgN());
@@ -83,7 +83,7 @@ end
 rule "Phosphorous recommendation plum"
 	salience 4 
 	when 
-		$s: Soil( kgP == 0.0, plant.equals("sljiva"))
+		$s: Soil( kgP == 1.0, plant.equals("sljiva"))
 	then 
 		$s.setKgP( 60 - (3 * $s.getPhosphorous()));
 		System.out.println("set kgP to " + $s.getKgP());
@@ -93,7 +93,7 @@ end
 rule "Potassium recommendation plum"
 	salience 4 
 	when 
-		$s: Soil( kgK == 0.0, plant.equals("sljiva"))
+		$s: Soil( kgK == 1.0, plant.equals("sljiva"))
 	then 
 		$s.setKgK( 176 - (5.5 * $s.getPotassium()));
 		System.out.println("set kgK to " + $s.getKgK());
@@ -101,18 +101,18 @@ rule "Potassium recommendation plum"
 end
 
 rule "NPK recommendation plum"
-	salience 4 
+	salience 3 
 	when 
-		$s: Soil( kgN != 0.0, kgP != 0.0, kgK != 0.0, plant.equals("sljiva"))	
+		$s: Soil( kgN != 1.0, kgP != 1.0, kgK != 1.0, plant.equals("sljiva"))	
 	then 
-		$s.setRecommendation($s.getRecommendation() + "NPK (kg/ha): " + $s.getKgN() + " " + $s.getKgP() + " " + $s.getKgK() + " \n" );
+		$s.setRecommendation($s.getRecommendation() + "NPK (kg/ha): " + $s.getKgN() + ", " + $s.getKgP() + ", " + $s.getKgK() + " \n" );
 		update($s);
 end
 
 rule "Nitrogen recommendation strawberry"
 	salience 4 
 	when 
-		$s: Soil( kgN == 0.0, plant.equals("jagoda") )
+		$s: Soil( kgN == 1.0, plant.equals("jagoda") )
 	then 
 		$s.setKgN( 140 - (200 * $s.getNitrogen()));
 		System.out.println("set kgN to " + $s.getKgN());
@@ -122,7 +122,7 @@ end
 rule "Phosphorous recommendation strawberry"
 	salience 4 
 	when 
-		$s: Soil( kgP == 0.0, plant.equals("jagoda"))
+		$s: Soil( kgP == 1.0, plant.equals("jagoda"))
 	then 
 		$s.setKgP( 60 - (3 * $s.getPhosphorous()));
 		System.out.println("set kgP to " + $s.getKgP());
@@ -132,7 +132,7 @@ end
 rule "Potassium recommendation strawberry"
 	salience 4 
 	when 
-		$s: Soil( kgK == 0.0, plant.equals("jagoda"))
+		$s: Soil( kgK == 1.0, plant.equals("jagoda"))
 	then 
 		$s.setKgK( 240 - (9 * $s.getPotassium()));
 		System.out.println("set kgK to " + $s.getKgK());
@@ -140,18 +140,18 @@ rule "Potassium recommendation strawberry"
 end
 
 rule "NPK recommendation strawberry"
-	salience 4 
+	salience 3 
 	when 
-		$s: Soil( kgN != 0.0, kgP != 0.0, kgK != 0.0, plant.equals("jagoda"))	
+		$s: Soil( kgN != 1.0, kgP != 1.0, kgK != 1.0, plant.equals("jagoda"))	
 	then 
-		$s.setRecommendation($s.getRecommendation() + "NPK (kg/ha): " + $s.getKgN() + " " + $s.getKgP() + " " + $s.getKgK() + " \n" );
+		$s.setRecommendation($s.getRecommendation() + "NPK (kg/ha): " + $s.getKgN() + ", " + $s.getKgP() + ", " + $s.getKgK() + " \n" );
 		update($s);
 end
 
 rule "Nitrogen recommendation blackberry"
 	salience 4 
 	when 
-		$s: Soil( kgN == 0.0, plant.equals("kupina") )
+		$s: Soil( kgN == 1.0, plant.equals("kupina") )
 	then 
 		$s.setKgN( 200 - (500 * $s.getNitrogen()));
 		System.out.println("set kgN to " + $s.getKgN());
@@ -161,7 +161,7 @@ end
 rule "Phosphorous recommendation blackberry"
 	salience 4 
 	when 
-		$s: Soil( kgP == 0.0, plant.equals("kupina"))
+		$s: Soil( kgP == 1.0, plant.equals("kupina"))
 	then 
 		$s.setKgP( 155 - (11 * $s.getPhosphorous()));
 		System.out.println("set kgP to " + $s.getKgP());
@@ -171,21 +171,33 @@ end
 rule "Potassium recommendation blackberry"
 	salience 4 
 	when 
-		$s: Soil( kgK == 0.0, plant.equals("kupina"))
+		$s: Soil( kgK == 1.0, plant.equals("kupina"))
 	then 
 		$s.setKgK( 350 - (12.5 * $s.getPotassium()));
 		System.out.println("set kgK to " + $s.getKgK());
 		update($s);
 end
 
-rule "NPK recommendation blackberry"
-	salience 4 
+rule "Make it positive"
+	salience 4
 	when 
-		$s: Soil( kgN != 0.0, kgP != 0.0, kgK != 0.0, plant.equals("kupina"))	
+		$s: Soil(kgK <= 0.0 || kgN <= 0.0 || kgP <= 0.0)
+	then
+		$s.setPositive();
+		update($s);
+end
+
+rule "NPK recommendation blackberry"
+	salience 3 
+	when 
+		$s: Soil( kgN != 1.0, kgP != 1.0, kgK != 1.0, plant.equals("kupina"))	
 	then 
 		$s.setRecommendation($s.getRecommendation() + "NPK (kg/ha): " + $s.getKgN() + ", " + $s.getKgP() + ", " + $s.getKgK() + " \n" );
 		update($s);
 end
+
+
+
 
 
 		
