@@ -1,8 +1,14 @@
 package sbnz.integracija.example.facts;
 
+import org.kie.api.definition.type.Position;
+
 public class Plant {
+	@Position(0)
 	private String name;
-	private double pH;
+	private double phMin;
+	private double phMax;
+	private double humusMin;
+	private double humusMax;
 	private double nConsumption;
 	private double pConsumption;
 	private double kConsumption;
@@ -14,11 +20,31 @@ public class Plant {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public double getpH() {
-		return pH;
+	
+	public double getPhMin() {
+		return phMin;
 	}
-	public void setpH(double pH) {
-		this.pH = pH;
+	public void setPhMin(double phMin) {
+		this.phMin = phMin;
+	}
+	
+	public double getHumusMin() {
+		return humusMin;
+	}
+	public void setHumusMin(double humusMin) {
+		this.humusMin = humusMin;
+	}
+	public double getHumusMax() {
+		return humusMax;
+	}
+	public void setHumusMax(double humusMax) {
+		this.humusMax = humusMax;
+	}
+	public double getPhMax() {
+		return phMax;
+	}
+	public void setPhMax(double phMax) {
+		this.phMax = phMax;
 	}
 	public double getnConsumption() {
 		return nConsumption;
@@ -38,15 +64,23 @@ public class Plant {
 	public void setkConsumption(double kConsumption) {
 		this.kConsumption = kConsumption;
 	}
-	
-	public Plant(String name, double pH, double nConsumption, double pConsumption, double kConsumption) {
+	public Plant(String name, double phMin, double phMax, double humusMin, double humusMax, double nConsumption,
+			double pConsumption, double kConsumption) {
 		super();
 		this.name = name;
-		this.pH = pH;
+		this.phMin = phMin;
+		this.phMax = phMax;
+		this.humusMin = humusMin;
+		this.humusMax = humusMax;
 		this.nConsumption = nConsumption;
 		this.pConsumption = pConsumption;
 		this.kConsumption = kConsumption;
 	}
+	public Plant() {
+	}
+	
+	
+	
 	
 	
 }

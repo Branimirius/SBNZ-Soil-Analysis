@@ -25,6 +25,7 @@ import sbnz.integracija.example.facts.Soil;
 public class SampleAppController {
 	private static Logger log = LoggerFactory.getLogger(SampleAppController.class);
 
+	@Autowired
 	private final SampleAppService sampleService;
 
 	@Autowired
@@ -35,13 +36,26 @@ public class SampleAppController {
 	//get users
 	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping(value = "/recommend")
-	public Soil getAllUsers(@RequestBody SoilDTO soilDTO){
+	public Soil getFertilizerRecommendation(@RequestBody SoilDTO soilDTO){
 		Soil newSoil = new Soil(soilDTO.getpH(), soilDTO.getHumus(), soilDTO.getCarbonate(), soilDTO.getNitrogen(), soilDTO.getPhosphorous(), soilDTO.getPotassium(), soilDTO.getPlant(), "");
 
 		log.debug("Soil request received for: " + newSoil);
 		System.out.println("Soil request received for: " + newSoil.toString());
 
 		Soil s2 = sampleService.getClassifiedSoil(newSoil);
+		//Item i1 = sampleService.getClassifiedItem(new Item("brufen", 350.0, 350.0 ));
+		return s2;
+	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@PostMapping(value = "/plant")
+	public Soil getPlantRecommendation(@RequestBody SoilDTO soilDTO){
+		Soil newSoil = new Soil(soilDTO.getpH(), soilDTO.getHumus(), soilDTO.getCarbonate(), soilDTO.getNitrogen(), soilDTO.getPhosphorous(), soilDTO.getPotassium(), soilDTO.getPlant(), "");
+
+		log.debug("Plant request received for: " + newSoil);
+		System.out.println("Plant request received for: " + newSoil.toString());
+
+		Soil s2 = sampleService.getPlantRecommendation(newSoil);
 		//Item i1 = sampleService.getClassifiedItem(new Item("brufen", 350.0, 350.0 ));
 		return s2;
 	}

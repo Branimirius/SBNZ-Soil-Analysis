@@ -6,7 +6,7 @@ import sbnz.integracija.example.facts.Soil;
 rule "CaCO3 recommendation - Acid"
 	salience 5 
     when
-        $s: Soil( pH < 6.5 )
+        $s: Soil( pH < 6.5, plant.equals("") == false )
     then	
         $s.setRecommendation($s.getRecommendation() + "CaCO3: " + (13 - (2 * $s.getpH())) + "t/ha ; \n");
         //recommendation = "5t krecnjaka";
@@ -16,7 +16,7 @@ end
 rule "Manure recommendation - low humus"
 	salience 5 
 	when
-		$s: Soil( humus <= 3.0 )
+		$s: Soil( humus <= 3.0, plant.equals("") == false )
 	then
 		$s.setRecommendation($s.getRecommendation() + "Stajnjak: 40t/ha ; \n" );
 		update($s);
@@ -25,7 +25,7 @@ end
 rule "Manure recommendation"
 	salience 5 
 	when
-		$s: Soil( humus > 3.0, humus <= 6.8 )
+		$s: Soil( humus > 3.0, humus <= 6.8, plant.equals("") == false )
 	then
 		$s.setRecommendation($s.getRecommendation() + "Stajnjak: " + (70 - (10* $s.getHumus())) + "t/ha ; \n");
 		update($s);

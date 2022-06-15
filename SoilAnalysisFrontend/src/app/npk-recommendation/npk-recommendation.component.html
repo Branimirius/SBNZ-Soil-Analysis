@@ -66,37 +66,37 @@
               <div class="example-container" >
                 <mat-form-field appearance="fill" class="width-200">
                   <mat-label>pH</mat-label>
-                  <input type="text" matInput >
+                  <input type="number" step = "0.001" matInput [(ngModel)]="pH">
                 </mat-form-field>
                 <br>
                 <mat-form-field appearance="fill" class="width-200">
                   <mat-label>humus</mat-label>
-                  <input type="text" matInput >
+                  <input type="number" step = "0.001" matInput [(ngModel)]="humus" >
                 </mat-form-field>
                 <br>
                 <mat-form-field appearance="fill" class="width-200">
                   <mat-label>carbonate</mat-label>
-                  <input type="text" matInput  placeholder="Ex. pat@example.com" >
+                  <input type="number" step = "0.001" matInput  [(ngModel)]="carbonate" >
                 </mat-form-field>
                 <br>
                 <mat-form-field appearance="fill" class="width-200">
                   <mat-label>nitrogen</mat-label>
-                  <input type="text" matInput >
+                  <input type="number" step = "0.001" matInput [(ngModel)]="nitrogen">
                 </mat-form-field>
                 <br>
                 <mat-form-field appearance="fill" class="width-200">
                   <mat-label>phosphorous</mat-label>
-                  <input type="text" matInput >
+                  <input type="number" step = "0.001" matInput [(ngModel)]="phosphorous">
                 </mat-form-field>
                 <br>
                 <mat-form-field appearance="fill" class="width-200">
                   <mat-label>potassium</mat-label>
-                  <input type="text" matInput  placeholder="Ex. 0631122333">
+                  <input type="number" step = "0.001" matInput  [(ngModel)]="potassium">
                 </mat-form-field>
                 <br>
                 
                 <mat-card-actions>
-                  <button (click) = "onSubmit()" mat-raised-button color="primary">Recommend </button>
+                  <button (click) = "onSubmitPlant()" mat-raised-button color="primary">Recommend </button>
                 </mat-card-actions>
                 <br>
                 <br><br>

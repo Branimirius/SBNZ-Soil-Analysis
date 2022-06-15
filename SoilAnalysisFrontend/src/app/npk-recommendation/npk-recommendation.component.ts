@@ -37,6 +37,12 @@ export class NpkRecommendationComponent implements OnInit {
     });
   }
 
+  onSubmitPlant(): void{
+    this.sendParametersPlants().subscribe((data: any) => {
+      this.recommendation = data.recommendation;
+    })
+  }
+
   // sendParameters(): Observable<any> {
   //   let params = new HttpParams()
   //   .set('pH', this.pH)
@@ -66,5 +72,21 @@ export class NpkRecommendationComponent implements OnInit {
         let options = { headers: headers };
       return this.http.post<any>("http://localhost:8180/api/recommend", body, options);
   }
+  public sendParametersPlants(){
+    const body = {
+      pH: this.pH,
+      humus : this.humus,
+      carbonate: this.carbonate,
+      nitrogen : this.nitrogen,
+      phosphorous: this.phosphorous,
+      potassium: this.potassium,
+      plant : ""
+      
+    };
+      let headers = new HttpHeaders({
+        'Content-Type': 'application/json' });
+      let options = { headers: headers };
+    return this.http.post<any>("http://localhost:8180/api/plant", body, options);
+}
 
 }

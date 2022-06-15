@@ -1,0 +1,69 @@
+//created on: Jun 11, 2022
+package integracija
+
+//list any import classes here.
+//milan.segedinac@gmail.com
+import sbnz.integracija.example.OperationService;
+import java.util.ArrayList;
+import sbnz.integracija.example.facts.Soil;
+import sbnz.integracija.example.facts.Plant;
+
+//declare any global variables here
+global OperationService operationService;
+global ArrayList plants;
+
+
+query alreadyContainedPlant( String $name)
+	$plant: Plant( $name; ) and
+	$soil: Soil($plants: plants contains $plant)
+end
+
+query suitablePlant( String $name)
+	
+	$plant: Plant( $name;) and	
+	fulfilsPhParameter(  $name; ) and
+	fulfilsHumusParameter(  $name; )
+	
+end
+
+query fulfilsPhParameter( String $name)
+	$plant: Plant( $name; )
+	Soil(pH >= $plant.getPhMin && pH <= $plant.getPhMax)
+	//Boolean(booleanValue == true ) from operationService.isInPhRange($plant, $soilPh)
+	
+end
+
+query fulfilsHumusParameter( String $name)
+	$plant: Plant( $name; )
+	Soil(humus >= $plant.getHumusMin && humus <= $plant.getHumusMax)
+	//Boolean(booleanValue == true ) from operationService.isInHumusRange($plant, $soilHumus)
+	
+end
+
+
+rule "Suitable plants" salience 1
+
+	no-loop
+    when
+    	$s: Soil( plant.equals(""), plants.size > 0)
+        $optimal: Plant() from operationService.getOptimalPlant(plants, $s)
+    then
+        System.out.println("Plants found: " + plants.size());
+        System.out.println("Optimal plant: " + $optimal.getName());
+
+end
+
+rule "Single suitable plant" salience 2
+    //include attributes such as "salience" here...
+    //no-loop
+    when
+    	
+    	$s: Soil( plant.equals(""), plants.size < 10)
+        suitablePlant( $plant; )
+        not alreadyContainedPlant( $plant; )
+        $p: Plant( $plant; )
+    then
+    	plants.add($p);
+        $s.getPlants().add($p);
+		update($s);
+end

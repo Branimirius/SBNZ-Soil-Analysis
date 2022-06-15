@@ -1,6 +1,7 @@
 package sbnz.integracija.example.facts;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Soil implements Serializable {
@@ -18,6 +19,8 @@ public class Soil implements Serializable {
 	private double potassium;
 	private String plant;
 	private String recommendation;
+	private ArrayList<Plant> plants;
+	private Fertilizer fertilizer;
 	private double kgN;
 	private double kgP;
 	private double kgK;
@@ -35,6 +38,8 @@ public class Soil implements Serializable {
 		this.kgK = 1.0;
 		this.kgN = 1.0;
 		this.kgP = 1.0;
+		this.fertilizer = new Fertilizer();
+		this.plants = new ArrayList<Plant>();
 	}
 	
 	
@@ -87,6 +92,12 @@ public class Soil implements Serializable {
 		this.recommendation = recommendation;
 	}
 	
+	public ArrayList<Plant> getPlants() {
+		return plants;
+	}
+	public void setPlants(ArrayList<Plant> plants) {
+		this.plants = plants;
+	}
 	public double getKgN() {
 		return kgN;
 	}
@@ -117,6 +128,15 @@ public class Soil implements Serializable {
 			this.kgK = 0.99;
 		} 
 	}
+	
+	public Fertilizer getFertilizer() {
+		return fertilizer;
+	}
+	public void setFertilizer(Fertilizer fertilizer) {
+		this.fertilizer = fertilizer;
+	}
+	
+	
 	@Override
 	public int hashCode() {
 		int hash = 3;
