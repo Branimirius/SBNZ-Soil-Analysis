@@ -18,15 +18,19 @@ public class Soil implements Serializable {
 	private double phosphorous;
 	private double potassium;
 	private String plant;
-	private String recommendation;
+	private Recommendation recommendation;
 	private ArrayList<Plant> plants;
 	private Fertilizer fertilizer;
 	private double kgN;
 	private double kgP;
 	private double kgK;
+	private Boolean phFixed;
+	private Boolean humusFixed;
+	private Boolean npkFixed;
+	private Boolean fertMassFixed;
 	
 	public Soil() {}
-	public Soil(double pH, double humus, double carbonate, double nitrogen, double phosphorous, double potassium,String plant, String recommendation) {
+	public Soil(double pH, double humus, double carbonate, double nitrogen, double phosphorous, double potassium,String plant) {
 		this.pH = pH;
 		this.humus = humus; 
 		this.carbonate = carbonate;
@@ -34,12 +38,16 @@ public class Soil implements Serializable {
 		this.phosphorous = phosphorous;
 		this.potassium = potassium;
 		this.plant = plant;
-		this.recommendation = recommendation;
+		this.recommendation = new Recommendation(0.0, 0.0, "0.0", new Fertilizer(), 0.0, new Fertilizer(), 0.0);
 		this.kgK = 1.0;
 		this.kgN = 1.0;
 		this.kgP = 1.0;
 		this.fertilizer = new Fertilizer();
 		this.plants = new ArrayList<Plant>();
+		this.phFixed = false;
+		this.humusFixed = false;
+		this.npkFixed = false;
+		this.fertMassFixed = false;
 	}
 	
 	
@@ -85,10 +93,10 @@ public class Soil implements Serializable {
 	public void setPlant(String plant) {
 		this.plant = plant;
 	}
-	public String getRecommendation() {
+	public Recommendation getRecommendation() {
 		return recommendation;
 	}
-	public void setRecommendation(String recommendation) {
+	public void setRecommendation(Recommendation recommendation) {
 		this.recommendation = recommendation;
 	}
 	
@@ -115,6 +123,32 @@ public class Soil implements Serializable {
 	}
 	public void setKgK(double kgK) {
 		this.kgK = kgK;
+	}
+	
+	
+	public Boolean getPhFixed() {
+		return phFixed;
+	}
+	public void setPhFixed(Boolean phFixed) {
+		this.phFixed = phFixed;
+	}
+	public Boolean getHumusFixed() {
+		return humusFixed;
+	}
+	public void setHumusFixed(Boolean humusFixed) {
+		this.humusFixed = humusFixed;
+	}
+	public Boolean getNpkFixed() {
+		return npkFixed;
+	}
+	public void setNpkFixed(Boolean npkFixed) {
+		this.npkFixed = npkFixed;
+	}
+	public Boolean getFertMassFixed() {
+		return fertMassFixed;
+	}
+	public void setFertMassFixed(Boolean fertMassFixed) {
+		this.fertMassFixed = fertMassFixed;
 	}
 	public void setPositive() {
 		System.out.println("making it positive..");

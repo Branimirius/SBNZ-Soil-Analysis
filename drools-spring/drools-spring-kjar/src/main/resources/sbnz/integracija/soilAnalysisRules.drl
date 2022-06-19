@@ -4,30 +4,41 @@ import sbnz.integracija.example.facts.Soil;
 //global String recommendation;
 
 rule "CaCO3 recommendation - Acid"
-	salience 5 
+	salience 5
+	no-loop 
     when
-        $s: Soil( pH < 6.5, plant.equals("") == false )
+        $s: Soil( pH < 6.5, plant.equals("") == false, $r: recommendation, phFixed == false )
+        
     then	
-        $s.setRecommendation($s.getRecommendation() + "CaCO3: " + (13 - (2 * $s.getpH())) + "t/ha ; \n");
+        //$s.setRecommendation($s.getRecommendation() + "CaCO3: " + (13 - (2 * $s.getpH())) + "t/ha ; \n");
         //recommendation = "5t krecnjaka";
+        $s.setPhFixed(true);
+        $r.setCaco3((13 - (2 * $s.getpH())));
+        
+        $s.setRecommendation($r);
         update($s);
 end
 
 rule "Manure recommendation - low humus"
 	salience 5 
+	no-loop
 	when
-		$s: Soil( humus <= 3.0, plant.equals("") == false )
+		$s: Soil( humus <= 3.0, plant.equals("") == false, $r: recommendation != null, humusFixed == false )
 	then
-		$s.setRecommendation($s.getRecommendation() + "Stajnjak: 40t/ha ; \n" );
+		$s.setHumusFixed(true);
+		$r.setManure(40.0);
+		$s.setRecommendation($r);
 		update($s);
 end	
 
 rule "Manure recommendation"
 	salience 5 
+	no-loop
 	when
-		$s: Soil( humus > 3.0, humus <= 6.8, plant.equals("") == false )
+		$s: Soil( humus > 3.0, humus <= 6.8, plant.equals("") == false, $r: recommendation != null, humusFixed == false )
 	then
-		$s.setRecommendation($s.getRecommendation() + "Stajnjak: " + (70 - (10* $s.getHumus())) + "t/ha ; \n");
+		$r.setManure((70 - (10* $s.getHumus())));
+		$s.setRecommendation($r);
 		update($s);
 end	
 
@@ -64,9 +75,12 @@ end
 rule "NPK recommendation raspberry"
 	salience 3 
 	when 
-		$s: Soil( kgN != 1.0, kgP != 1.0, kgK != 1.0, plant.equals("malina"))	
+		$s: Soil( kgN != 1.0, kgP != 1.0, kgK != 1.0, plant.equals("malina"), $r: recommendation != null, npkFixed == false)	
 	then 
-		$s.setRecommendation($s.getRecommendation() + "NPK (kg/ha): " + $s.getKgN() + ", " + $s.getKgP() + ", " + $s.getKgK() + " \n" );
+		$r.setKgNPK("NPK (kg/ha): " + $s.getKgN() + ", " + $s.getKgP() + ", " + $s.getKgK());
+		$s.setRecommendation($r);
+		$s.setNpkFixed(true);
+		System.out.println($s.getRecommendation().getKgNPK());
 		update($s);
 end
 
@@ -103,9 +117,11 @@ end
 rule "NPK recommendation plum"
 	salience 3 
 	when 
-		$s: Soil( kgN != 1.0, kgP != 1.0, kgK != 1.0, plant.equals("sljiva"))	
+		$s: Soil( kgN != 1.0, kgP != 1.0, kgK != 1.0, plant.equals("sljiva"), $r: recommendation != null, npkFixed == false)	
 	then 
-		$s.setRecommendation($s.getRecommendation() + "NPK (kg/ha): " + $s.getKgN() + ", " + $s.getKgP() + ", " + $s.getKgK() + " \n" );
+		$r.setKgNPK("NPK (kg/ha): " + $s.getKgN() + ", " + $s.getKgP() + ", " + $s.getKgK());
+		$s.setRecommendation($r);
+		$s.setNpkFixed(true);
 		update($s);
 end
 
@@ -142,9 +158,11 @@ end
 rule "NPK recommendation strawberry"
 	salience 3 
 	when 
-		$s: Soil( kgN != 1.0, kgP != 1.0, kgK != 1.0, plant.equals("jagoda"))	
+		$s: Soil( kgN != 1.0, kgP != 1.0, kgK != 1.0, plant.equals("jagoda"), $r: recommendation != null, npkFixed == false)	
 	then 
-		$s.setRecommendation($s.getRecommendation() + "NPK (kg/ha): " + $s.getKgN() + ", " + $s.getKgP() + ", " + $s.getKgK() + " \n" );
+		$r.setKgNPK("NPK (kg/ha): " + $s.getKgN() + ", " + $s.getKgP() + ", " + $s.getKgK());
+		$s.setRecommendation($r);
+		$s.setNpkFixed(true);
 		update($s);
 end
 
@@ -190,9 +208,11 @@ end
 rule "NPK recommendation blackberry"
 	salience 3 
 	when 
-		$s: Soil( kgN != 1.0, kgP != 1.0, kgK != 1.0, plant.equals("kupina"))	
+		$s: Soil( kgN != 1.0, kgP != 1.0, kgK != 1.0, plant.equals("kupina"), $r: recommendation != null, npkFixed == false)	
 	then 
-		$s.setRecommendation($s.getRecommendation() + "NPK (kg/ha): " + $s.getKgN() + ", " + $s.getKgP() + ", " + $s.getKgK() + " \n" );
+		$r.setKgNPK("NPK (kg/ha): " + $s.getKgN() + ", " + $s.getKgP() + ", " + $s.getKgK());
+		$s.setRecommendation($r);
+		$s.setNpkFixed(true);
 		update($s);
 end
 

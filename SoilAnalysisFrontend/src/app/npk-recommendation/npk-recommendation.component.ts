@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Recommendation } from '../model/recommendation';
 
 @Component({
   selector: 'app-npk-recommendation',
@@ -9,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class NpkRecommendationComponent implements OnInit {
 
-  recommendation : String;
+  recommendation : Recommendation;
   pH: number;
   humus: number;
   carbonate: number;
@@ -19,7 +20,7 @@ export class NpkRecommendationComponent implements OnInit {
   plant: string;
 
   constructor(private http: HttpClient) { 
-    this.recommendation = "";
+    this.recommendation = new Recommendation;
     this.pH = 0;
     this.humus = 0;
     this.carbonate = 0;

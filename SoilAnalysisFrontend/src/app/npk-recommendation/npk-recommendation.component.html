@@ -52,7 +52,13 @@
                 </mat-card-actions>
                 <br>
                 <br><br>
-                <p>{{recommendation}}</p>
+                <p>CaCO3: {{recommendation.caco3}} t/ha</p>
+                <p>Stajnjak: {{recommendation.manure}} t/ha</p>
+                <p>{{recommendation.kgNPK}}</p>
+                <p *ngIf="recommendation.stringFertNPK == ''">Djubrivo npk: {{recommendation.fertilizerNPK.name}} => {{recommendation.massFertilizerNPK}} Kg</p>
+                <p *ngIf="recommendation.stringFertNPK != ''">Djubrivo npk: {{recommendation.stringFertNPK}}</p>
+                <p>Azotno djubrivo: {{recommendation.fertilizerN.name}} => {{recommendation.massFertilizerN}} Kg</p>
+
             </div>
           </mat-grid-tile>
         </mat-grid-list>
@@ -100,7 +106,12 @@
                 </mat-card-actions>
                 <br>
                 <br><br>
-                <p>{{recommendation}}</p>
+                <p>CaCO3: {{recommendation.caco3}}</p>
+                <p>Stajnjak: {{recommendation.manure}}</p>
+                <p>kg NPK: {{recommendation.kgNPK}}</p>
+                <p>Djubrivo npk: {{recommendation.fertilizerNPK.name}} {{recommendation.massFertilizerNPK}} Kg</p>
+                <p>Azotno djubrivo: {{recommendation.fertilizerN.name}} {{recommendation.massFertilizerN}} Kg</p>
+
             </div>
           </mat-grid-tile>
         </mat-grid-list>

@@ -37,7 +37,7 @@ public class SampleAppController {
 	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping(value = "/recommend")
 	public Soil getFertilizerRecommendation(@RequestBody SoilDTO soilDTO){
-		Soil newSoil = new Soil(soilDTO.getpH(), soilDTO.getHumus(), soilDTO.getCarbonate(), soilDTO.getNitrogen(), soilDTO.getPhosphorous(), soilDTO.getPotassium(), soilDTO.getPlant(), "");
+		Soil newSoil = new Soil(soilDTO.getpH(), soilDTO.getHumus(), soilDTO.getCarbonate(), soilDTO.getNitrogen(), soilDTO.getPhosphorous(), soilDTO.getPotassium(), soilDTO.getPlant());
 
 		log.debug("Soil request received for: " + newSoil);
 		System.out.println("Soil request received for: " + newSoil.toString());
@@ -50,7 +50,7 @@ public class SampleAppController {
 	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping(value = "/plant")
 	public Soil getPlantRecommendation(@RequestBody SoilDTO soilDTO){
-		Soil newSoil = new Soil(soilDTO.getpH(), soilDTO.getHumus(), soilDTO.getCarbonate(), soilDTO.getNitrogen(), soilDTO.getPhosphorous(), soilDTO.getPotassium(), soilDTO.getPlant(), "");
+		Soil newSoil = new Soil(soilDTO.getpH(), soilDTO.getHumus(), soilDTO.getCarbonate(), soilDTO.getNitrogen(), soilDTO.getPhosphorous(), soilDTO.getPotassium(), soilDTO.getPlant());
 
 		log.debug("Plant request received for: " + newSoil);
 		System.out.println("Plant request received for: " + newSoil.toString());
@@ -69,7 +69,7 @@ public class SampleAppController {
 			@RequestParam(required = true) double potassium,
 			@RequestParam(required = true) String plant) {
 
-		Soil newSoil = new Soil(pH, humus, carbonate, nitrogen, phosphorous, potassium, plant, "");
+		Soil newSoil = new Soil(pH, humus, carbonate, nitrogen, phosphorous, potassium, plant);
 
 		log.debug("Soil request received for: " + newSoil);
 		System.out.println("Soil request received for: " + newSoil.toString());

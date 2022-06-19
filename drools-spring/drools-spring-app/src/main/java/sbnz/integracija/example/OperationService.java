@@ -83,6 +83,17 @@ public class OperationService {
 		System.out.println(plant.getName() + " consumption difference " + (factorOne + factorTwo / 2) + " factor 1: " + factorOne + " , factor 2: " + factorTwo);
 		return factorOne + factorTwo / 2;
 	}
+	public int calculateMassKAN(double kgN, Fertilizer npkFert, double massNpk) {
+		double neededN = (kgN - (npkFert.getN() * massNpk / 100));
+		if (neededN < 0) {
+			neededN = 0;
+			return (int)neededN;
+		}
+		return (int)(neededN / 0.27);
+	}
+	public int calculateMassUREA(double massKAN) {
+		return (int)(massKAN / 1.7);
+	}
 	
 	public double abs(double a) {
 		if(a < 0) {

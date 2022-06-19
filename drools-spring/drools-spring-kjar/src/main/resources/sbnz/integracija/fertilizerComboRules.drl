@@ -5,6 +5,7 @@ package integracija
 
 import sbnz.integracija.example.facts.Soil;
 import sbnz.integracija.example.facts.Fertilizer;
+import sbnz.integracija.example.facts.Recommendation;
 import sbnz.integracija.example.OperationService;
 import java.util.ArrayList;
 
@@ -16,15 +17,16 @@ global ArrayList plants;
 rule "Recommend NPK proportion"
 	salience 2
     when
-        $soil: Soil($kgn: kgN, $kgp: kgP , $kgk: kgK, plant.equals("") == false)
+        $soil: Soil($kgn: kgN, $kgp: kgP , $kgk: kgK, plant.equals("") == false, $r: recommendation)
         $list: ArrayList( size > 0) from collect(
-        	Fertilizer()
+        	Fertilizer(P > 0 || K > 0)
         )
         
         $f: Fertilizer() from operationService.getOptimalFertilizer($list, $kgp, $kgk)
     then
+    	$r.setFertilizerNPK($f);
     	$soil.setFertilizer($f);
-        $soil.setRecommendation($soil.getRecommendation() + "Fertilizer: " + $f.getName());
+        $soil.setRecommendation($r);
 		
 		update($soil);
 		
@@ -33,11 +35,70 @@ end
 rule "Calculate kilograms of fertilizer"
     salience 1
     when
-        $soil: Soil( plant.equals("") == false)
+        $soil: Soil( plant.equals("") == false, $r: recommendation, fertMassFixed == false)
         String(length() > 0) from $soil.getFertilizer().getName()
         $fertMass: Integer() from operationService.calculateMassRecommendation($soil)
     then
-        $soil.setRecommendation($soil.getRecommendation() + " " + $fertMass + "kg");
+    	$r.setMassFertilizerNPK($fertMass);
+        $soil.setRecommendation($r);
+        $soil.setFertMassFixed(true);
+        insert(new Recommendation($r));
         update($soil);
 
+end
+
+rule "NPK combo managing"
+	when 
+		$soil: Soil(fertMassFixed == true)
+		$kalFerts: ArrayList(size > 0) from collect (
+			Fertilizer( N == 11, P == 52, (K % 30) == 0)
+		)
+		
+		$rec: Recommendation(stringFertNPK.equals("") == true,
+							  $f: fertilizerNPK memberOf $kalFerts					  
+							 )
+		 
+	then
+		System.out.println("NPK combo managing");
+		$rec.setStringFertNPK("MAP 11 52 0 => " + $rec.getMassFertilizerNPK() 
+			+ "Kg; " + "Kalijum 0 0 30 => " + ($rec.getMassFertilizerNPK() * ($f.getK()/30)) + "Kg; ");
+		
+		$soil.setRecommendation($rec);
+		update($rec);
+		update($soil);
+		
+	
+end
+
+rule "Nitrogen not optimised"
+	when
+		$ferts: ArrayList(size > 0) from collect (
+			Fertilizer(N > 0)
+			)
+		$kan: Fertilizer(N == 27, P == 0, K == 0)
+		$rec: Recommendation( nitroOptimised == false, $mass: massFertilizerNPK, $f: fertilizerNPK memberOf $ferts) 
+		$soil: Soil($kgn: kgN != 1)
+	then
+		$rec.setFertilizerN($kan);
+		$rec.setMassFertilizerN(operationService.calculateMassKAN($kgn, $f, $mass));
+		$rec.setNitroOptimised(true);
+		$soil.setRecommendation($rec);
+		update($rec);
+		update($soil);
+end
+
+rule "UREA needed"
+	when
+		$soil: Soil()
+		$kan: Fertilizer(N == 27, P == 0, K == 0)
+		$urea: Fertilizer(N == 46, P == 0, K == 0)
+		$rec: Recommendation(fertilizerN == $kan, $mass: massFertilizerN > 250.0, nitroOptimised == true)
+	then
+		$rec.setFertilizerN($urea);
+		$rec.setMassFertilizerN(operationService.calculateMassUREA($mass));
+		$soil.setRecommendation($rec);
+		update($rec);
+		update($soil);
+		
+	
 end
