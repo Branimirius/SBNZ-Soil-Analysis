@@ -55,9 +55,9 @@
                 <p>CaCO3: {{recommendation.caco3}} t/ha</p>
                 <p>Stajnjak: {{recommendation.manure}} t/ha</p>
                 <p>{{recommendation.kgNPK}}</p>
-                <p *ngIf="recommendation.stringFertNPK == ''">Djubrivo npk: {{recommendation.fertilizerNPK.name}} => {{recommendation.massFertilizerNPK}} Kg</p>
+                <p *ngIf="recommendation.stringFertNPK == ''">Djubrivo npk: {{recommendation.fertilizerNPK.name}} => {{recommendation.massFertilizerNPK}} Kg/ha</p>
                 <p *ngIf="recommendation.stringFertNPK != ''">Djubrivo npk: {{recommendation.stringFertNPK}}</p>
-                <p>Azotno djubrivo: {{recommendation.fertilizerN.name}} => {{recommendation.massFertilizerN}} Kg</p>
+                <p>Azotno djubrivo: {{recommendation.fertilizerN.name}} => {{recommendation.massFertilizerN}} Kg/ha</p>
 
             </div>
           </mat-grid-tile>
