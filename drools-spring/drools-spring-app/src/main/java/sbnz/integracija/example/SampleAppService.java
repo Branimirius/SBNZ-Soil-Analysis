@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import sbnz.integracija.example.facts.Fertilization;
 import sbnz.integracija.example.facts.Fertilizer;
 import sbnz.integracija.example.facts.Item;
 import sbnz.integracija.example.facts.Plant;
@@ -60,6 +61,16 @@ public class SampleAppService {
 		kieSession.insert(new Plant("malina", 5.8, 6.2, 3.0, 100.0, 120.0, 90.0, 160.0));
 		kieSession.insert(new Plant("kupina", 6.0, 6.5, 2.0, 4.0, 130.0, 90.0, 160.0));
 		kieSession.insert(new Plant("sljiva", 6.0, 7.5, 5.0, 100.0, 50.0, 30.0, 130.0));
+		
+		kieSession.insert(new Fertilization("total", 50));
+		kieSession.insert(new Fertilization("manure", 150));
+		kieSession.insert(new Fertilization("caco3", 200));
+		kieSession.insert(new Fertilization("total", 50));
+		kieSession.insert(new Fertilization("total", 50));
+		kieSession.insert(new Fertilization("manure", 150));
+		kieSession.insert(new Fertilization("caco3", 200));
+		kieSession.insert(new Fertilization("total", 50));
+
 		//kieSession.insert(new Recommendation());
 		kieSession.fireAllRules();
 		//System.out.println("RECOMMENDED: " + kieSession.getGlobal("recommendation"));

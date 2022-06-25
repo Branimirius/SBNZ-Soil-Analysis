@@ -6,6 +6,7 @@ package integracija
 import sbnz.integracija.example.facts.Soil;
 import sbnz.integracija.example.facts.Fertilizer;
 import sbnz.integracija.example.facts.Recommendation;
+import sbnz.integracija.example.facts.Fertilization;
 import sbnz.integracija.example.OperationService;
 import java.util.ArrayList;
 
@@ -49,6 +50,12 @@ end
 
 rule "NPK combo managing"
 	when 
+	
+		Number(intValue < 3) from accumulate(
+			$e: Fertilization(fertilizer.equals("caco3"), daysAgo > 180),
+			count($e)
+		)
+		
 		$soil: Soil(fertMassFixed == true)
 		$kalFerts: ArrayList(size > 0) from collect (
 			Fertilizer( N == 11, P == 52, (K % 30) == 0)
@@ -72,9 +79,15 @@ end
 
 rule "Nitrogen not optimised"
 	when
+		Number(intValue > 2) from accumulate(
+			$e: Fertilization(fertilizer.equals("manure"), daysAgo > 100),
+			count($e)
+		)
+		
 		$ferts: ArrayList(size > 0) from collect (
 			Fertilizer(N > 0)
 			)
+			
 		$kan: Fertilizer(N == 27, P == 0, K == 0)
 		$rec: Recommendation( nitroOptimised == false, $mass: massFertilizerNPK, $f: fertilizerNPK memberOf $ferts) 
 		$soil: Soil($kgn: kgN != 1)
@@ -102,3 +115,19 @@ rule "UREA needed"
 		
 	
 end
+
+rule "Waiting needed"
+	when
+		$fert: Fertilizer(P > 0)
+		$soil: Soil($rec: recommendation)
+		Recommendation(fertilizerNPK.equals($fert))
+		
+		Number(intValue > 0) from accumulate(
+			$e: Fertilization(fertilizer.equals("caco3"), daysAgo < 100),
+			count($e)
+		)
+		
+	then
+		System.out.println("Wait for 6 months after fertilizing with caco3");
+end
+
